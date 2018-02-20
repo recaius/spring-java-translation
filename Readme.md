@@ -64,46 +64,46 @@ BUILD SUCCESSFUL in 13s
 ----
 
 ```java
-            // トークンの取得
-            RecaiusService service = new RecaiusService(new User(SERVICE_ID, SERVICE_PASSWORD));
-            Token token = requestToken.postForObject("/", service, Token.class);
-            log.info(token.toString());
+// トークンの取得
+RecaiusService service = new RecaiusService(new User(SERVICE_ID, SERVICE_PASSWORD));
+Token token = requestToken.postForObject("/", service, Token.class);
+log.info(token.toString());
 
-            // 翻訳のリクエストにトークンを設定
-            RestTemplate requestTranslateWithToken = setToken(requestTranslate, token);
+// 翻訳のリクエストにトークンを設定
+RestTemplate requestTranslateWithToken = setToken(requestTranslate, token);
 
-            // 口語翻訳の実行
-            // デフォルトでは日英翻訳を行います
-            Query query = new Query("えー、東京タワーはどこですか？");
-            Translated result = requestTranslateWithToken.postForObject("/", query, Translated.class);
-            log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
+// 口語翻訳の実行
+// デフォルトでは日英翻訳を行います
+Query query = new Query("えー、東京タワーはどこですか？");
+Translated result = requestTranslateWithToken.postForObject("/", query, Translated.class);
+log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
 
-            query = new Query("お好み焼きはどこで買えますか？");
-            result = requestTranslateWithToken.postForObject("/", query, Translated.class);
-            log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
+query = new Query("お好み焼きはどこで買えますか？");
+result = requestTranslateWithToken.postForObject("/", query, Translated.class);
+log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
 
-            query = new Query("もうこれ以上食べれません。");
-            result = requestTranslateWithToken.postForObject("/", query, Translated.class);
-            log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
+query = new Query("もうこれ以上食べれません。");
+result = requestTranslateWithToken.postForObject("/", query, Translated.class);
+log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
 
-            // 翻訳後の言語の設定は以下のように行ないます
-            query.setTgt_lang("zh");
-            result = requestTranslateWithToken.postForObject("/", query, Translated.class);
-            log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
+// 翻訳後の言語の設定は以下のように行ないます
+query.setTgt_lang("zh");
+result = requestTranslateWithToken.postForObject("/", query, Translated.class);
+log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
 
-            query.setTgt_lang("ko");
-            result = requestTranslateWithToken.postForObject("/", query, Translated.class);
-            log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
+query.setTgt_lang("ko");
+result = requestTranslateWithToken.postForObject("/", query, Translated.class);
+log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
 
-            // 英日翻訳を行う場合は以下のように行ないます
-            query = new Query("Really?");
-            query.setSrc_lang("en");
-            query.setTgt_lang("ja");
-            result = requestTranslateWithToken.postForObject("/", query, Translated.class);
-            log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
+// 英日翻訳を行う場合は以下のように行ないます
+query = new Query("Really?");
+query.setSrc_lang("en");
+query.setTgt_lang("ja");
+result = requestTranslateWithToken.postForObject("/", query, Translated.class);
+log.info( query.getQuery() + " -> " + result.getData().getTranslations().get(0).getTranslatedText() );
 
-            // トークンの破棄
-            setToken(requestToken, token).delete("/");
+// トークンの破棄
+setToken(requestToken, token).delete("/");
 ```
 
 以上。
